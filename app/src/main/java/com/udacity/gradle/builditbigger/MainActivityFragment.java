@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.MyJokes;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -33,4 +35,10 @@ public class MainActivityFragment extends Fragment {
         mAdView.loadAd(adRequest);
         return root;
     }
+
+
+//    public void tellJoke(View view) {
+//        MyJokes mMyJokes = new MyJokes();
+//        Toast.makeText(getActivity(), mMyJokes.getJokes(), Toast.LENGTH_SHORT).show();
+//    }
 }
