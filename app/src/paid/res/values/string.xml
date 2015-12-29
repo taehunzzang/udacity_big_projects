@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Paid_Build it Bigger</string>
+    <bool name="isPaid">true</bool>
+</resources>
