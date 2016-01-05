@@ -70,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
         private Context context;
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            sendBroadcast(new Intent("com.udacity.gradle.builditbigger.showprogress"));
+        }
+
+        @Override
         protected String doInBackground(Pair<Context, String>... params) {
             if(myApiService == null){
                 MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
@@ -97,9 +104,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-
             Toast.makeText(context,result,Toast.LENGTH_LONG).show();
-
+            sendBroadcast(new Intent("com.udacity.gradle.builditbigger.hideprogress"));
             Intent intent = new Intent(getApplicationContext(),JokesActivity.class);
 //            MyJokes mMyJokes = new MyJokes();
 //            String joke = mMyJokes.getJokes();
