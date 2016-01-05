@@ -29,7 +29,7 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().registerReceiver(progressHideShow, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+//        getActivity().registerReceiver(progressHideShow, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
     }
 
@@ -39,7 +39,7 @@ public class MainActivityFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
 
         AdView mAdView = (AdView) root.findViewById(R.id.adView);
-        loadingProgressBar = (ProgressBar) root.findViewById(R.id.loadingProgressBar);
+//        loadingProgressBar = (ProgressBar) root.findViewById(R.id.loadingProgressBar);
         // Create an ad request. Check logcat output for the hashed device ID to
         // get test ads on a physical device. e.g.
         // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
@@ -53,20 +53,20 @@ public class MainActivityFragment extends Fragment {
         return root;
     }
 
-    private BroadcastReceiver progressHideShow = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("com.udacity.gradle.builditbigger.showprogress")) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-            }else{
-                loadingProgressBar.setVisibility(View.GONE);
-            }
-        }
-    };
+//    private BroadcastReceiver progressHideShow = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            if(intent.getAction().equals("com.udacity.gradle.builditbigger.showprogress")) {
+//                loadingProgressBar.setVisibility(View.VISIBLE);
+//            }else{
+//                loadingProgressBar.setVisibility(View.GONE);
+//            }
+//        }
+//    };
 
     @Override
     public void onStop() {
-        getActivity().unregisterReceiver(progressHideShow);
+        //getActivity().unregisterReceiver(progressHideShow);
         super.onStop();
     }
 

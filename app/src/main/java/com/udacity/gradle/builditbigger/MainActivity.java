@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            sendBroadcast(new Intent("com.udacity.gradle.builditbigger.showprogress"));
+            //sendBroadcast(new Intent("com.udacity.gradle.builditbigger.showprogress"));
         }
 
         @Override
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
 
             Toast.makeText(context,result,Toast.LENGTH_LONG).show();
-            sendBroadcast(new Intent("com.udacity.gradle.builditbigger.hideprogress"));
+           // sendBroadcast(new Intent("com.udacity.gradle.builditbigger.hideprogress"));
             Intent intent = new Intent(getApplicationContext(),JokesActivity.class);
 //            MyJokes mMyJokes = new MyJokes();
 //            String joke = mMyJokes.getJokes();
