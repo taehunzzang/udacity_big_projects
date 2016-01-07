@@ -21,9 +21,12 @@ import com.taehun.jokesactivity.JokesActivity;
 import com.taehun.myapplication.backend.myApi.MyApi;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public String greetingName="hello taehun";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void tellJoke(View view) {
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this,"Taehun"));
+        //new EndpointsAsyncTask().execute(new Pair<Context, String>(this,"Taehun"));
+
+
+        try {
+            EndpointsAsyncTask jokeTask = new EndpointsAsyncTask();
+            jokeTask.execute(new Pair<Context, String>(this,greetingName));
+            String joke = jokeTask.get(30, TimeUnit.SECONDS);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
 //        Intent intent = new Intent(this,JokesActivity.class);
 //        MyJokes mMyJokes = new MyJokes();
 //        String joke = mMyJokes.getJokes();
@@ -65,53 +79,56 @@ public class MainActivity extends AppCompatActivity {
 //        Toast.makeText(this, mMyJokes.getJokes(), Toast.LENGTH_SHORT).show();
     }
 
-    class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
-        private  MyApi myApiService = null;
-        private Context context;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //sendBroadcast(new Intent("com.udacity.gradle.builditbigger.showprogress"));
-        }
-
-        @Override
-        protected String doInBackground(Pair<Context, String>... params) {
-            if(myApiService == null){
-                MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
-//                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
-                        .setRootUrl("https://build-it-bigger-1173.appspot.com/_ah/api/")
-                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                            @Override
-                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                                abstractGoogleClientRequest.setDisableGZipContent(true);
-                            }
-                        });
-                myApiService = builder.build();
-            }
-
-            context = params[0].first;
-            String name = params[0].second;
-
-            try{
-                return myApiService.sayHi(name).execute().getData();
-            }catch (IOException e){
-                return e.getMessage();
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            Toast.makeText(context,result,Toast.LENGTH_LONG).show();
-           // sendBroadcast(new Intent("com.udacity.gradle.builditbigger.hideprogress"));
-            Intent intent = new Intent(getApplicationContext(),JokesActivity.class);
-//            MyJokes mMyJokes = new MyJokes();
-//            String joke = mMyJokes.getJokes();
-            intent.putExtra(JokesActivity.JOKE_KEY,result);
-            startActivity(intent);
-        }
-    }
+//    final public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+//        private  MyApi myApiService = null;
+//        private Context context;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//
+//            //sendBroadcast(new Intent("com.udacity.gradle.builditbigger.showprogress"));
+//        }
+//
+//        @Override
+//        protected String doInBackground(Pair<Context, String>... params) {
+//            if(myApiService == null){
+//                MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null)
+////                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+//                        .setRootUrl("https://build-it-bigger-1173.appspot.com/_ah/api/")
+//                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+//                            @Override
+//                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+//                                abstractGoogleClientRequest.setDisableGZipContent(true);
+//                            }
+//                        });
+//                myApiService = builder.build();
+//            }
+//
+//            context = params[0].first;
+//            String name = params[0].second;
+//
+//            try{
+//                return myApiService.sayHi(name).execute().getData();
+//            }catch (IOException e){
+//                return e.getMessage();
+//            }
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//
+//            Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+//           // sendBroadcast(new Intent("com.udacity.gradle.builditbigger.hideprogress"));
+//            Intent intent = new Intent(MainActivity.this,JokesActivity.class);
+////            MyJokes mMyJokes = new MyJokes();
+////            String joke = mMyJokes.getJokes();
+//            if(result.equals(greetingName)){
+//                testGreeting = true;
+//            }
+//            intent.putExtra(JokesActivity.JOKE_KEY,result);
+//            startActivity(intent);
+//        }
+//    }
 
 }
